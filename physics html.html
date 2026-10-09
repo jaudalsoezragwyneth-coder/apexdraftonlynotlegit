@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.P.E.X. Machines | R.A.P.T.O.R. GT</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --surface-color: #161616;
+            --surface-light: #222222;
+            --accent-orange: #d9480f;
+            --accent-glow: rgba(217, 72, 15, 0.4);
+            --text-tan: #d2b48c;
+            --text-light: #e8dcc7;
+            --text-muted: #8c7a61;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-tan);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+
+        .highlight {
+            color: var(--accent-orange);
+        }
+
+        nav {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid var(--accent-orange);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            letter-spacing: 4px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--text-tan);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-orange);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        section {
+            padding: 80px 50px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            background: radial-gradient(circle at center, #1a1512 0%, #0a0a0a 100%);
+            border-bottom: 2px solid var(--accent-orange);
+            position: relative;
+        }
+
+        .hero h4 {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.8);
+        }
+
+        .hero h3 {
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            margin-bottom: 30px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            font-size: 1.1rem;
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
+            border-left: 3px solid var(--accent-orange);
+        }
+
+        .viewer-container {
+            width: 100%;
+            height: 500px;
+            background: #000;
+            border: 1px dashed var(--accent-orange);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: ew-resize;
+            margin: 40px 0;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
+            overflow: hidden;
+        }
+
+        #helmetVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none; 
+        }
+
+        .viewer-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-orange);
+            font-size: 1rem;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border: 1px solid var(--accent-orange);
+            pointer-events: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .spec-box {
+            background-color: var(--surface-color);
+            border: 1px solid #333;
+            border-top: 4px solid var(--accent-orange);
+            padding: 30px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .spec-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .spec-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .spec-list {
+            list-style: none;
+        }
+
+        .spec-list li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .spec-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-orange);
+            font-weight: bold;
+        }
+
+        .purpose-note {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 8px;
+            border-left: 2px solid #555;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .tech-card {
+            background: var(--surface-light);
+            padding: 20px;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-orange);
+        }
+
+        .tech-card h4 {
+            color: var(--accent-orange);
+            margin-bottom: 10px;
+        }
+
+        .physics-panel {
+            background-color: var(--surface-color);
+            padding: 40px;
+            border: 1px solid var(--accent-orange);
+            margin-top: 20px;
+            box-shadow: 0 0 30px rgba(217, 72, 15, 0.05);
+        }
+
+        .physics-panel h4 {
+            color: var(--accent-orange);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 5px;
+        }
+
+        .physics-panel p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            background-color: #000;
+            padding: 12px 25px;
+            border: 1px solid #333;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            border-color: var(--accent-orange);
+            color: var(--text-light);
+            background: #111;
+        }
+
+        .references {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px dashed #444;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .references h4 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .references p {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>A.P.E.X. MACHINES</h1>
+        <ul>
+            <li><a href="#about">Mission</a></li>
+            <li><a href="#viewer">360 View</a></li>
+            <li><a href="#specs">Materials</a></li>
+            <li><a href="#tech">Tech</a></li>
+            <li><a href="#physics">Physics</a></li>
+        </ul>
+    </nav>
+
+    <section id="about" class="hero">
+        <h4>Advanced Performance & Extreme Engineering</h4>
+        <h1>R.A.P.T.O.R. <span class="highlight">GT</span></h1>
+        <h3>"Baby Raptor" | Reinforced Aerodynamic Performance Touring Rim</h3>
+        <p>A full-face, high-speed sport-touring helmet built on an aerodynamic composite shell. Styled in a matte dark charcoal and tactical tan finish with high-visibility orange accents. Built for maximum protection, precision stability, and modern functionality for the demanding rider.</p>
+    </section>
+
+    <section id="viewer">
+        <h2>Interactive Holographic Scan</h2>
+        <div class="viewer-container" id="helmetViewer">
+            <video id="helmetVideo" src="PHYSICS PORTFOLIO_2.mp4" muted playsinline preload="auto"></video>
+            <div class="viewer-overlay">&lt; Click & Drag to Rotate &gt;</div>
+        </div>
+    </section>
+
+    <section id="specs">
+        <h2>Material Selection & Architecture</h2>
+        <div class="grid-2">
+            
+            <div class="spec-box">
+                <h3 class="highlight">A. Outer Shell Composite</h3>
+                <ul class="spec-list">
+                    <li><strong>Exterior Layer (1.00 mm):</strong> Epoxy UV Gelcoat Finish layered over 3 layers of woven E-glass & S-glass hybrid reinforcement in an epoxy matrix.
+                        <span class="purpose-note">Purpose: Balances cost and high mechanical performance. Improves impact resistance.</span>
+                    </li>
+                    <li><strong>Intermediate Reinforcement (0.90 mm):</strong> 2 layers of woven S-Fiberglass cloth.
+                        <span class="purpose-note">Purpose: High abrasion resistance; prevents cracking during heavy impacts.</span>
+                    </li>
+                    <li><strong>Inner Layer (1.20 mm):</strong> 8 layers of high-density Aramid (Kevlar) hybrid weave.
+                        <span class="purpose-note">Purpose: Core energy absorption and structural integrity.</span>
+                    </li>
+                    <li><strong>Resin Matrix:</strong> Epoxy resin (60% fiber / 40% resin by weight).</li>
+                </ul>
+            </div>
+
+            <div class="spec-box">
+                <h3 class="highlight">B. Impact Absorbing Layer</h3>
+                <ul class="spec-list">
+                    <li><strong>Crown (Top):</strong> High-density EPS — 40 mm (Density: 50 g/L)</li>
+                    <li><strong>Forehead:</strong> High-density EPS (Density: 70 g/L)</li>
+                    <li><strong>Temples:</strong> Medium Density EPS — 40 mm (Density: 40 g/L)</li>
+                    <li><strong>Rim:</strong> Soft EPS — 20 mm (Density: 35 g/L)</li>
+                    <li>
+                        <span class="purpose-note">Purpose: Multi-density EPS zones are engineered specifically to absorb kinetic energy during collisions by crushing at targeted rates, protecting specific cranial sectors.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="spec-box">
+                <h3 class="highlight">C & D. Comfort Isolation & Restraint</h3>
+                <ul class="spec-list">
+                    <li><strong>Comfort Padding:</strong> Crown (15mm Open-cell PU + 3D Air Mesh), Cheek/Jaw (30mm High-density PU), Neck (20mm Dense PU + Neoprene sweat barrier).
+                        <span class="purpose-note">Purpose: PU foam deforms slowly turning energy into heat. Air mesh aids breathability. Neoprene and 1.2mm moisture-wicking polyester limit sweat.</span>
+                    </li>
+                    <li><strong>Chin Strap:</strong> 1.6 mm High-Tenacity Woven Polyester (>15kN tensile strength) with 4.0mm PU foam sleeves.
+                        <span class="purpose-note">Purpose: HTWP holds the helmet securely during catastrophic events.</span>
+                    </li>
+                    <li><strong>Hardware:</strong> Marine-grade 316 Stainless Double D-Rings, cold-pressed anchor plates, solid rivets, and PC snap button.</li>
+                </ul>
+            </div>
+
+            <div class="spec-box">
+                <h3 class="highlight">E & F. Visor & Aerodynamics</h3>
+                <ul class="spec-list">
+                    <li><strong>Ventilation System:</strong> Aggressive Chin Vent, Crown Ports, Internal Air Grooves, and Rear Exhaust Ports.</li>
+                    <li><strong>Visor Structure:</strong> Optical Class 1 Polycarbonate (PC) with a medical-grade silicone perimeter gasket.
+                        <span class="purpose-note">Purpose: Provides maximum optical clarity, shielding debris while the gasket seals out dust/water.</span>
+                    </li>
+                    <li><strong>Inner Lens:</strong> Hydrophilic Triacetate Cellulose (TAC) insert (Pinlock 120 standard).
+                        <span class="purpose-note">Purpose: Eliminates visor fogging from rider respiration.</span>
+                    </li>
+                    <li><strong>Visor Tech:</strong> Sun-reactive Spirooxazine photochromic dye matrix, coated in Hydrophobic Fluoro-silane and Polysiloxane UV hard-coat.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="tech">
+        <h2>Next-Gen Safety Features</h2>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h4>Smart Brake Light</h4>
+                <p>Integrated accelerometer-triggered rear LED light bar. Driven by an internal 3-axis MEMS sensor, it illuminates brilliantly during sudden deceleration to warn trailing vehicles without physical brake line connections.</p>
+            </div>
+            <div class="tech-card">
+                <h4>Waveguide HUD</h4>
+                <p>An integrated optical waveguide Heads-Up Display projecting crucial turn-by-turn navigation and speed metrics seamlessly into the lower visor periphery.</p>
+            </div>
+            <div class="tech-card">
+                <h4>Crash Detection & eCall</h4>
+                <p>Equipped with a tri-axial high-G impact detector (>100G threshold). Upon severe impact detection, it automatically transmits post-impact telemetry and precise GPS coordinates to emergency services via LTE.</p>
+            </div>
+            <div class="tech-card">
+                <h4>Fatigue Monitoring</h4>
+                <p>Contact photoplethysmography (PPG) pulse-rate sensors are embedded discreetly in the cheek pad fabric. These monitor Heart Rate Variability (HRV) in real-time to alert the rider against micro-sleeps and drowsiness.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="physics">
+        <h2>Safety Test Simulation & Physics Explanation</h2>
+        <div class="physics-panel">
+            
+            <h4>Linear Momentum and Impulse</h4>
+            <p>Momentum is the quantity of motion an object possesses, defined as the product of its mass and velocity ($p = mv$) (Urone & Hinrichs, 2020b). In a crash, a rider's head possesses significant momentum. Upon impact, this momentum must be reduced to zero. The impulse-momentum theorem ($F \Delta t = \Delta p$) dictates that the change in momentum ($\Delta p$) is equal to the average force ($F$) multiplied by the time duration of the impact ($\Delta t$). The R.A.P.T.O.R. GT's multi-density EPS core is designed to crush progressively, effectively prolonging the collision time ($\Delta t$). By increasing the time it takes for the head to stop, the peak force ($F$) transmitted to the skull is drastically reduced (Urone & Hinrichs, 2020b).</p>
+            
+            <h4>Newton's Second Law and Deceleration</h4>
+            <p>According to Newton’s Second Law, the net force acting on an object is proportional to its mass and acceleration ($F = ma$) (Admin, 2024). When a head strikes a rigid surface, it undergoes a massive, instantaneous deceleration ($a$). The helmet's highly engineered composite padding mitigates this violent change. By crushing at controlled rates, the EPS foam makes this deceleration less sudden. A lower deceleration directly results in a lower net force experienced by the brain, preventing severe traumatic brain injuries.</p>
+            
+            <h4>Kinetic Energy and the Work-Energy Theorem</h4>
+            <p>Impact absorption is the conversion of kinetic energy into material deformation during a crash (Brooks, 2026b). A moving rider possesses kinetic energy calculated as $KE = \frac{1}{2}mv^2$. To bring the rider's head to a safe stop, the helmet must dissipate this energy by doing physical work ($W = Fd$, where $d$ is the deformation distance). The Kevlar and S-glass outer shell first disperses the localized impact over a wider surface area. Then, the underlying EPS matrix takes in and dissipates the kinetic energy by permanently deforming (crushing). This irreversible plastic deformation converts the lethal kinetic energy into harmless heat and mechanical destruction, sacrificing the helmet to save the rider.</p>
+
+            <h4>Rotational Force Deflection</h4>
+            <p>Most real-world impacts occur at oblique angles, introducing rotational acceleration—a primary cause of severe concussions. The aerodynamic, smooth profile of the R.A.P.T.O.R. GT’s UV gelcoat finish is engineered to slide across abrasive surfaces like asphalt. This reduces friction and prevents the helmet from "catching," thereby minimizing the transfer of angular momentum and rotational sheer forces to the rider's neck and brain.</p>
+
+        </div>
+
+        <div class="references">
+            <h4>Literature & References</h4>
+            <p>Admin. (2024, June 24). Newton's Second Law Of Motion. BYJUS. https://byjus.com/physics/newtons-second-law-of-motion-and-momentum/</p>
+            <p>Brooks, T. (2026b, July 20). Helmet impact absorption explained for safer cycling. The Beam. https://thebeamofficial.com/fr/blogs/news/helmet-impact-absorption-explained-for-safer-cycling</p>
+            <p>Urone, P. P., & Hinrichs, R. (2020b, March 26). 8.1 Linear Momentum, Force, and Impulse - Physics | OpenStax. https://openstax.org/books/physics/pages/8-1-linear-momentum-force-and-impulse</p>
+            <p>Meliande, N., Oliveira, M., Silveira, P., et al. (2022). Curaua–Aramid Hybrid Laminated Composites for Impact Applications. Polymers, 14(18), 3749.</p>
+            <p>Nugroho, A., et al. (2022). Energy absorption of densified veneer-aramid hybrid composites subjected to ballistic impact. Heliyon, 8(8).</p>
+            <p>Al-Ketan, O., et al. (2021). Design and development of motorcycle helmet using carbon fiber reinforced epoxy resin hybrid composite. Results in Engineering.</p>
+            <p>Rishi, J. P., et al. (2026). Influence of S-Glass and E-Glass Hybridization on the Mechanical Properties of Epoxy-Based Composite Laminates. Fibers, 14(9).</p>
+        </div>
+    </section>
+
+    <section id="team">
+        <h2>Group IDK / The Architects</h2>
+        <div class="team-grid">
+            <div class="team-member">Babasa, Denise Leila P.</div>
+            <div class="team-member">Bacalso, Kishi Lei T.</div>
+            <div class="team-member">De Leon, Shanae Leahna A.</div>
+            <div class="team-member">Domingo, Anna Sofia Alyssa T.</div>
+            <div class="team-member">Estrada, Emmanual James</div>
+            <div class="team-member">Jaudalso, Ezra Gwyneth D.</div>
+            <div class="team-member">Marasigan, Yuan Andrei L.</div>
+            <div class="team-member">Sabalboro, John Darwin Jr. A.</div>
+        </div>
+    </section>
+
+    <script>
+        const viewer = document.getElementById('helmetViewer');
+        const video = document.getElementById('helmetVideo');
+        
+        let isDragging = false;
+        let startX = 0;
+        let startVideoTime = 0;
+
+        video.addEventListener('loadedmetadata', () => {
+            
+            viewer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.pageX;
+                startVideoTime = video.currentTime;
+                viewer.style.cursor = 'grabbing';
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                viewer.style.cursor = 'ew-resize';
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault(); 
+                
+                const dragDistance = e.pageX - startX;
+                const sensitivity = 200; 
+                
+                let newTime = startVideoTime + (dragDistance / sensitivity);
+                
+                if (newTime < 0) {
+                    newTime = video.duration + (newTime % video.duration);
+                } else if (newTime > video.duration) {
+                    newTime = newTime % video.duration;
+                }
+                
+                video.currentTime = newTime;
+            });
+
+            viewer.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                startX = e.touches[0].pageX;
+                startVideoTime = video.currentTime;
+            });
+
+            window.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                
+                const dragDistance = e.touches[0].pageX - startX;
+                const sensitivity = 150; 
+                
+                let newTime = startVideoTime + (dragDistance / sensitivity);
+                
+                if (newTime < 0) {
+                    newTime = video.duration + (newTime % video.duration);
+                } else if (newTime > video.duration) {
+                    newTime = newTime % video.duration;
+                }
+                
+                video.currentTime = newTime;
+            });
+        });
+
+        viewer.addEventListener('mousedown', function hideOverlay() {
+            document.querySelector('.viewer-overlay').style.display = 'none';
+            viewer.removeEventListener('mousedown', hideOverlay);
+        });
+        viewer.addEventListener('touchstart', function hideOverlay() {
+            document.querySelector('.viewer-overlay').style.display = 'none';
+            viewer.removeEventListener('touchstart', hideOverlay);
+        });
+    </script>
+</body>
+</html>
